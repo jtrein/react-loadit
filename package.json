@@ -1,10 +1,13 @@
 {
   "name": "react-loadit",
   "version": "1.0.0",
-  "description": "A simple, happy, little lazy loader for React. Works best with webpack.",
+  "description": "A tiny, happy lazy loader for React.",
   "main": "dist/index.js",
   "repository": "https://github.com/jtrein/react-loadit",
-  "author": "Jeremiah Trein <jeremiahtrein@gmail.com>",
+  "author": {
+    "name": "Jeremiah Trein",
+    "email": "jeremiahtrein@gmail.com"
+  },
   "license": "MIT",
   "private": false,
   "scripts": {
