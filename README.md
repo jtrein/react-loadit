@@ -44,6 +44,12 @@ new CommonsChunkPlugin({
 // ...
 ```
 
+## Demo
+
+Run `yarn && yarn start` from a directory inside `./examples`.
+
+> *Dependencies: You'll need to install `create-react-app` globally.*
+
 ## API
 
 ### `load`
