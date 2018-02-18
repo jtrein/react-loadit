@@ -1,25 +1,8 @@
 import React, { Component } from 'react';
 import { func, bool, number, string } from 'prop-types';
 
-/**
-* LoadComponent
-*
-* Code splits and lazy loads components from current component directory ("./").
-* This reduces the entry chunk significantly and does not load paths the user never visits.
-*
-* The key factor to this is using "import()" (proposed to TC39 and currently at
-* stage 3). There are alternatives, but webpack includes
-* "import()" by default, which is amazingly helpful.
-*
-* Further reading: https://github.com/tc39/proposal-dynamic-import
-* For status updates: https://github.com/babel/proposals
-*
-* Available props:
-*  * path {str}    component path to load (i.e. Home)
-*/
 export default class LoadComponent extends Component {
   static defaultProps = {
-    base: './',
     delay: 250,
     loadingComponent: null,
     shouldLoad: null,
@@ -27,10 +10,9 @@ export default class LoadComponent extends Component {
   };
 
   static propTypes = {
-    base: string,
     delay: number,
+    load: func.isRequired,
     loadingComponent: func,
-    path: string.isRequired,
     shouldLoad: bool,
     timeout: number,
   };
@@ -39,18 +21,17 @@ export default class LoadComponent extends Component {
 
   componentDidMount() {
     this.mounted = true;
-    const { base, path } = this.props;
 
-    this.handleLoadComponent({ base, path, shouldLoad: this.shouldLoad() });
+    this.handleLoadComponent(this.shouldLoad());
   }
 
-  componentWillReceiveProps({ base, path, shouldLoad }) {
-    if (path === this.props.path && this.state.moduleToLoad) return;
+  componentWillReceiveProps({ shouldLoad }) {
+    if (this.state.moduleToLoad) return;
 
     clearTimeout(this.delay);
     clearTimeout(this.timeout);
 
-    this.handleLoadComponent({ base, path, shouldLoad: this.shouldLoad(shouldLoad) });
+    this.handleLoadComponent(this.shouldLoad(shouldLoad));
   }
 
   componentWillUnmount() {
@@ -79,19 +60,23 @@ export default class LoadComponent extends Component {
     }, this.props.timeout);
   }
 
-  handleLoadComponent = ({ base, path, shouldLoad }) => {
+  handleLoadComponent = (shouldLoad) => {
     if (this.mounted === false || shouldLoad === false) return null;
 
     // start timers
     this.delay = this.delayTimer();
     if (this.props.timeout) (this.timeout = this.timeoutTimer());
 
-    return this.props.load()
+    const { load } = this.props;
+    const doLoad = Array.isArray(load) ? load[0] : load;
+    return doLoad()
       .then((component) => {
         if (this.mounted === false) return;
-        const moduleToLoad = component.default !== undefined
+
+        // @todo error msg handling
+        const moduleToLoad = component && component.__esModule && component.default
           ? component.default
-          : component[path];
+          : component[load[1]];
 
         if (this.props.timeout) this.loadTimeout = false;
         if (this.mounted === false) return;

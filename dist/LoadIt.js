@@ -24,25 +24,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var BASE_PATH_DEFAULT = './';
-
-/**
-* LoadComponent
-*
-* Code splits and lazy loads components from current component directory ("./").
-* This reduces the entry chunk significantly and does not load paths the user never visits.
-*
-* The key factor to this is using "import()" (proposed to TC39 and currently at
-* stage 3). There are alternatives, but webpack includes
-* "import()" by default, which is amazingly helpful.
-*
-* Further reading: https://github.com/tc39/proposal-dynamic-import
-* For status updates: https://github.com/babel/proposals
-*
-* Available props:
-*  * path {str}    component path to load (i.e. Home)
-*/
-
 var LoadComponent = function (_Component) {
   _inherits(LoadComponent, _Component);
 
@@ -62,21 +43,21 @@ var LoadComponent = function (_Component) {
 
       if (shouldLoad === null) return true;
       return shouldLoad;
-    }, _this.handleLoadComponent = function (_ref2) {
-      var base = _ref2.base,
-          path = _ref2.path,
-          shouldLoad = _ref2.shouldLoad;
-
+    }, _this.handleLoadComponent = function (shouldLoad) {
       if (_this.mounted === false || shouldLoad === false) return null;
 
       // start timers
       _this.delay = _this.delayTimer();
       if (_this.props.timeout) _this.timeout = _this.timeoutTimer();
 
-      // return import(`${base || BASE_PATH_DEFAULT}${path}.js`)
-      return _this.props.load().then(function (component) {
+      var load = _this.props.load;
+
+      var doLoad = Array.isArray(load) ? load[0] : load;
+      return doLoad().then(function (component) {
         if (_this.mounted === false) return;
-        var moduleToLoad = component.default !== undefined ? component.default : component[path];
+
+        // @todo error msg handling
+        var moduleToLoad = component && component.__esModule && component.default ? component.default : component[load[1]];
 
         if (_this.props.timeout) _this.loadTimeout = false;
         if (_this.mounted === false) return;
@@ -103,44 +84,24 @@ var LoadComponent = function (_Component) {
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
-  /**
-   * share
-   *
-   * Share component resources (e.g. components lazy-loaded that you only want to be loaded once)
-   * between LoadIt components.
-   *
-   * NOTE: This is an anti-pattern. Only use this if you haven't used webpack's (up to v3.*.*)
-   * CommonsChunkPlugin (see README for instructions)
-   * to group components loaded in more than one module into a bundle.
-   *
-   * @return {obj}    `get`: access data via key; `set`: provided an object, will cache the object for retrieval
-   */
-
-
   _createClass(LoadComponent, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
       this.mounted = true;
-      var _props = this.props,
-          base = _props.base,
-          path = _props.path;
 
-
-      this.handleLoadComponent({ base: base, path: path, shouldLoad: this.shouldLoad() });
+      this.handleLoadComponent(this.shouldLoad());
     }
   }, {
     key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(_ref3) {
-      var base = _ref3.base,
-          path = _ref3.path,
-          shouldLoad = _ref3.shouldLoad;
+    value: function componentWillReceiveProps(_ref2) {
+      var shouldLoad = _ref2.shouldLoad;
 
-      if (path === this.props.path && this.state.moduleToLoad) return;
+      if (this.state.moduleToLoad) return;
 
       clearTimeout(this.delay);
       clearTimeout(this.timeout);
 
-      this.handleLoadComponent({ base: base, path: path, shouldLoad: this.shouldLoad(shouldLoad) });
+      this.handleLoadComponent(this.shouldLoad(shouldLoad));
     }
   }, {
     key: 'componentWillUnmount',
@@ -174,14 +135,12 @@ var LoadComponent = function (_Component) {
     key: 'render',
     value: function render() {
       // single-out `...rest` as `moduleToLoad` props
-      var _props2 = this.props,
-          base = _props2.base,
-          delay = _props2.delay,
-          loadingComponent = _props2.loadingComponent,
-          path = _props2.path,
-          shouldLoad = _props2.shouldLoad,
-          timeout = _props2.timeout,
-          rest = _objectWithoutProperties(_props2, ['base', 'delay', 'loadingComponent', 'path', 'shouldLoad', 'timeout']);
+      var _props = this.props,
+          delay = _props.delay,
+          loadingComponent = _props.loadingComponent,
+          shouldLoad = _props.shouldLoad,
+          timeout = _props.timeout,
+          rest = _objectWithoutProperties(_props, ['delay', 'loadingComponent', 'shouldLoad', 'timeout']);
 
       var moduleToLoad = this.state.moduleToLoad;
 
@@ -194,31 +153,16 @@ var LoadComponent = function (_Component) {
 }(_react.Component);
 
 LoadComponent.defaultProps = {
-  base: './',
   delay: 250,
   loadingComponent: null,
   shouldLoad: null,
   timeout: null
 };
 LoadComponent.propTypes = {
-  base: _propTypes.string,
   delay: _propTypes.number,
+  load: _propTypes.func.isRequired,
   loadingComponent: _propTypes.func,
-  path: _propTypes.string.isRequired,
   shouldLoad: _propTypes.bool,
   timeout: _propTypes.number
 };
-
-LoadComponent.share = function () {
-  var shareCache = void 0;
-  return {
-    get: function get(key) {
-      return shareCache[key];
-    },
-    set: function set(obj) {
-      shareCache = obj;
-    }
-  };
-};
-
 exports.default = LoadComponent;
