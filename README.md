@@ -46,12 +46,15 @@ new CommonsChunkPlugin({
 
 ### `load`
 
-*func|arr, required:*
+*func|arr, **required** *
 * *Default export: `() => import(...)`*
 * *Named (single) export: `[() => import('./Exported'), 'SomeExport']`*
-  * *@todo - multiple named exports via custom `render()` prop*
+  * *@todo - multiple named exports?*
 
 A component to dynamically load.
+
+`<LoadIt load={() => import('./LoadMe')} />`
+`<LoadIt load={[ () => import('./LoadMe'), 'LoadThisExport' ]} />`
 
 ### `loadingComponent`
 
