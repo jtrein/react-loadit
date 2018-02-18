@@ -57,11 +57,15 @@ A component to dynamically load.
 
 **Default export**
 
-`<LoadIt load={() => import('./LoadMe')} />`
+```js
+<LoadIt load={() => import('./LoadMe')} />
+```
 
 **Named export**
 
-`<LoadIt load={[ () => import('./LoadMe'), 'LoadThisExport' ]} />`
+```js
+<LoadIt load={[ () => import('./LoadMe'), 'LoadThisExport' ]} />
+```
 
 ### `loadingComponent`
 
@@ -90,7 +94,9 @@ Return an optional component to show while loading. Passes an object to be used 
 
 *int*
 
-`<LoadIt delay={200} loadingComponent={...} ... />`
+```js
+<LoadIt delay={200} loadingComponent={...} ... />
+```
 
 Good to use for components that are taking awhile (> ~200ms) to load (possibly on a slow connection, or the component is large in size). Use with `loadingComponent`.
 
@@ -100,7 +106,9 @@ The basic idea is to show nothing until this delay has past, then showing a spin
 
 *int*
 
-`<LoadIt timeout={10000} loadingComponent={...} ... />`
+```js
+<LoadIt timeout={10000} loadingComponent={...} ... />
+```
 
 Good to use for components that are taking their time 🐢 to load (possibly on a slow connection, or the component is large in size). Use with `loadingComponent`.
 
@@ -108,7 +116,9 @@ Good to use for components that are taking their time 🐢 to load (possibly on 
 
 *bool*
 
-`<LoadIt shouldLoad={this.state.data.length && true} ... />`
+```js
+<LoadIt shouldLoad={this.state.data.length && true} ... />
+```
 
 This is optional and simply an opportunity to avoid nesting the component inside if/else logic inside of `render()`. This will load the core `<LoadIt />`, but not dynamically load the desired file, or loading views, until the logic returns `true`.
 
