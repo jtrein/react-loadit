@@ -128,10 +128,8 @@ export default class LoadComponent extends Component {
   render() {
     // single-out `...rest` as `moduleToLoad` props
     const {
-      base,
       delay,
       loadingComponent,
-      path,
       shouldLoad,
       timeout,
       ...rest
