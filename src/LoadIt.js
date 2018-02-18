@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { func, bool, number, string } from 'prop-types';
 
-const BASE_PATH_DEFAULT = './';
-
 /**
 * LoadComponent
 *
@@ -88,7 +86,6 @@ export default class LoadComponent extends Component {
     this.delay = this.delayTimer();
     if (this.props.timeout) (this.timeout = this.timeoutTimer());
 
-    // return import(`${base || BASE_PATH_DEFAULT}${path}.js`)
     return this.props.load()
       .then((component) => {
         if (this.mounted === false) return;
