@@ -1,0 +1,47 @@
+{
+  "name": "react-loadit",
+  "version": "1.0.0",
+  "description": "A simple, happy, little lazy loader for React. Works best with webpack.",
+  "main": "dist/index.js",
+  "repository": "https://github.com/jtrein/react-loadit",
+  "author": "Jeremiah Trein <jeremiahtrein@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "build": "babel --plugins transform-class-properties --presets stage-0,env,react --ignore '**/__tests__' src --out-dir dist",
+    "lint": "eslint ./ --ext=\".js\" --ignore-pattern node_modules/ --ignore-pattern dist/",
+    "prepare": "yarn build",
+    "test": "jest src/__tests__/LoadIt.spec.js"
+  },
+  "jest": {
+    "verbose": true
+  },
+  "peerDependencies": {
+    "react": "^16.2.0 || ^15.0.0",
+    "react-dom": "^16.2.0 || ^15.0.0"
+  },
+  "dependencies": {
+    "prop-types": "^15.6.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.22.2",
+    "babel-core": "^6.6.5",
+    "babel-eslint": "^8.0.2",
+    "babel-plugin-dynamic-import-node": "^1.1.0",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.3.13",
+    "babel-preset-stage-0": "^6.3.13",
+    "enzyme": "^2.9.1",
+    "eslint": "^4.10.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.4.0",
+    "jest": "^21.2.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-test-renderer": "^15.0.0"
+  }
+}
