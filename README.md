@@ -3,6 +3,8 @@ Simple, tiny React component lazy-loader. Splits your React app at defined point
 
 *Published from a part of a private project I wrote. Thought I'd share it with you.*
 
+PS - If you're looking for a full-on, feature-rich version, I would use [react-loadable](https://github.com/jamiebuilds/react-loadable).
+
 ## Install
 `yarn add react-loadit`
 
@@ -53,11 +55,11 @@ new CommonsChunkPlugin({
 
 A component to dynamically load.
 
-Default
+**Default export**
 
 `<LoadIt load={() => import('./LoadMe')} />`
 
-Named
+**Named export**
 
 `<LoadIt load={[ () => import('./LoadMe'), 'LoadThisExport' ]} />`
 
