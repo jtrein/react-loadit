@@ -1,6 +1,8 @@
 # React LoadIt
 Simple, tiny React component lazy-loader. Splits your React app at defined points at the component-level, so there's no unnecessary code delivered.
 
+*Published from a part of a private project I wrote. Thought I'd share it with you.*
+
 ## Install
 `yarn add react-loadit`
 
@@ -44,7 +46,10 @@ new CommonsChunkPlugin({
 
 ### `load`
 
-*func, required: () => import(...)*
+*func|arr, required:*
+* *Default export: `() => import(...)`*
+* *Named (single) export: `[() => import('./Exported'), 'SomeExport']`*
+  * *@todo - multiple named exports via custom `render()` prop*
 
 A component to dynamically load.
 
@@ -81,3 +86,20 @@ Good to use for components that are taking awhile (> ~200ms) to load (possibly o
 
 The basic idea is to show nothing until this delay has past, then showing a spinner or message to the effect of "loading...". Research has shown the user will perceive the app as being faster if no spinner is shown before 200ms. Makes sense.
 
+### `timeout`
+
+*int*
+
+`<LoadIt timeout={10000} loadingComponent={...} ... />`
+
+Good to use for components that are taking their time 🐢 to load (possibly on a slow connection, or the component is large in size). Use with `loadingComponent`.
+
+### `shouldLoad`
+
+*bool*
+
+`<LoadIt shouldLoad={this.state.data.length && true} ... />`
+
+This is optional and simply an opportunity to avoid nesting the component inside if/else logic inside of `render()`. This will load the core `<LoadIt />`, but not dynamically load the desired file, or loading views, until the logic returns `true`.
+
+This pattern can be helpful in a situation where you want to show a wrapping component
