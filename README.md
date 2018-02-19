@@ -48,7 +48,7 @@ new CommonsChunkPlugin({
 
 Run `yarn && yarn start` from a directory inside `./examples`.
 
-> *Dependencies: You'll need to install `create-react-app` globally.*
+> *Dependencies: You'll need to install `create-react-app` globally. Or use [the new way](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b)...`npx`.*
 
 ## API
 
