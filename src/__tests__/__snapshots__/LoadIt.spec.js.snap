@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoadIt renders LoadIt component with load OK 1`] = `null`;
