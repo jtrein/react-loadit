@@ -128,4 +128,8 @@ Good to use for components that are taking their time 🐢 to load (possibly on 
 
 This is optional and simply an opportunity to avoid nesting the component inside if/else logic inside of `render()`. This will load the core `<LoadIt />`, but not dynamically load the desired file, or loading views, until the logic returns `true`.
 
-This pattern can be helpful in a situation where you want to show a wrapping component
+This pattern can be helpful in a situation where you want to show a wrapping component.
+
+## Running tests
+
+Pull the repo and run `yarn test`.
