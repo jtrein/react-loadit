@@ -98,7 +98,7 @@ Return an optional component to show while loading. Passes an object to be used 
 
 ### `delay`
 
-*int*
+*int (default: 250)*
 
 ```js
 <LoadIt delay={200} loadingComponent={...} ... />
