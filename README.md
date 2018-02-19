@@ -134,4 +134,4 @@ This pattern can be helpful in a situation where you want to show a wrapping com
 
 ## Running tests
 
-Pull the repo and run `yarn test`.
+Pull the repo and run `yarn && yarn test`.
