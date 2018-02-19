@@ -53,11 +53,17 @@ var LoadComponent = function (_Component) {
       var load = _this.props.load;
 
       var doLoad = Array.isArray(load) ? load[0] : load;
+
       return doLoad().then(function (component) {
         if (_this.mounted === false) return;
 
         // @todo error msg handling
+        // @todo let user have more control via render prop,
+        // as this makes assumptions about the type of module being loaded
         var moduleToLoad = component && component.__esModule && component.default ? component.default : component[load[1]];
+
+        // e.g. tests
+        if (!moduleToLoad) return component;
 
         if (_this.props.timeout) _this.loadTimeout = false;
         if (_this.mounted === false) return;

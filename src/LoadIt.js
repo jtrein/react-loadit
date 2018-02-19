@@ -69,14 +69,20 @@ export default class LoadComponent extends Component {
 
     const { load } = this.props;
     const doLoad = Array.isArray(load) ? load[0] : load;
+
     return doLoad()
       .then((component) => {
         if (this.mounted === false) return;
 
         // @todo error msg handling
+        // @todo let user have more control via render prop,
+        // as this makes assumptions about the type of module being loaded
         const moduleToLoad = component && component.__esModule && component.default
           ? component.default
           : component[load[1]];
+
+        // e.g. tests
+        if (!moduleToLoad) return component;
 
         if (this.props.timeout) this.loadTimeout = false;
         if (this.mounted === false) return;
