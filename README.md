@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/jtrein/react-loadit.svg?branch=master)](https://travis-ci.org/jtrein/react-loadit)
+
 # React LoadIt
 Simple, tiny React component lazy-loader. Splits your React app at defined points at the component-level, so there's no unnecessary code delivered.
 
