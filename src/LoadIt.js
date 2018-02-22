@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { func, bool, number, string } from 'prop-types';
 
-export default class LoadComponent extends Component {
+export default class LoadIt extends Component {
   static defaultProps = {
     delay: 250,
     loadingComponent: null,

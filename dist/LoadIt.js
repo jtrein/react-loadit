@@ -24,21 +24,21 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var LoadComponent = function (_Component) {
-  _inherits(LoadComponent, _Component);
+var LoadIt = function (_Component) {
+  _inherits(LoadIt, _Component);
 
-  function LoadComponent() {
+  function LoadIt() {
     var _ref;
 
     var _temp, _this, _ret;
 
-    _classCallCheck(this, LoadComponent);
+    _classCallCheck(this, LoadIt);
 
     for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = LoadComponent.__proto__ || Object.getPrototypeOf(LoadComponent)).call.apply(_ref, [this].concat(args))), _this), _this.state = { moduleToLoad: null, pastDelay: false, loadTimeout: false, loadError: false }, _this.shouldLoad = function () {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = LoadIt.__proto__ || Object.getPrototypeOf(LoadIt)).call.apply(_ref, [this].concat(args))), _this), _this.state = { moduleToLoad: null, pastDelay: false, loadTimeout: false, loadError: false }, _this.shouldLoad = function () {
       var shouldLoad = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _this.props.shouldLoad;
 
       if (shouldLoad === null) return true;
@@ -90,7 +90,7 @@ var LoadComponent = function (_Component) {
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
-  _createClass(LoadComponent, [{
+  _createClass(LoadIt, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
       this.mounted = true;
@@ -155,20 +155,20 @@ var LoadComponent = function (_Component) {
     }
   }]);
 
-  return LoadComponent;
+  return LoadIt;
 }(_react.Component);
 
-LoadComponent.defaultProps = {
+LoadIt.defaultProps = {
   delay: 250,
   loadingComponent: null,
   shouldLoad: null,
   timeout: null
 };
-LoadComponent.propTypes = {
+LoadIt.propTypes = {
   delay: _propTypes.number,
   load: _propTypes.func.isRequired,
   loadingComponent: _propTypes.func,
   shouldLoad: _propTypes.bool,
   timeout: _propTypes.number
 };
-exports.default = LoadComponent;
+exports.default = LoadIt;
